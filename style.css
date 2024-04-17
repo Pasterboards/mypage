@@ -1,0 +1,45 @@
+/* 基本样式 */
+
+.floatingText {
+    position: absolute;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    color: rgb(0, 0, 0); /* 文本颜色始终为黑色 */
+    text-align: center;
+    cursor: pointer; /* 显示可点击的鼠标光标 */
+    padding: 3px; /* 添加内边距以创建背景填充的空间 */
+    border-radius: 3px; /* 圆角效果 */
+    transition: background-color 0.3s; /* 添加背景颜色过渡效果 */
+    white-space: nowrap; /* 保持文字不换行 */
+}
+
+/* 当画面上没有任何年份时应用悬停效果 */
+.noYearActive .floatingText:hover {
+    background-color: rgba(0, 0, 0, 0.3); /* 悬停时的淡灰色背景，透明度30% */
+}
+
+/* 当元素显示名称时（即可点击以显示年份）应用悬停效果 */
+.floatingText[data-isName="true"]:hover {
+    background-color: rgba(0, 0, 0, 0.3); /* 悬停时的淡灰色背景，透明度30% */
+}
+
+/* 当元素显示年份时（即可点击以显示名称）应用悬停效果 */
+.floatingText.yearElement:hover {
+    background-color: rgba(0, 0, 0, 0.3); /* 悬停时的淡灰色背景，透明度30% */
+}
+
+/* 添加适应iPhone屏幕的样式 */
+
+/* 调整字体大小和间距为较小的屏幕 */
+.floatingText {
+    font-size: 12px;
+    padding: 2px;
+}
+
+/* 为iPhone大小的屏幕（纵向）添加媒体查询 */
+@media only screen and (max-width: 375px) {
+    .floatingText {
+        font-size: 10px;
+        padding: 1px;
+    }
+}
