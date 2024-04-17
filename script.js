@@ -31,17 +31,17 @@ $(document).ready(function() {
             class: 'floatingText',
         }).appendTo('body');
         
-        var touchStartTime = 0;  // 初始化触摸开始时间
+        var lastClickTime = 0;  // 初始化最后一次点击时间
         
         $element.on('touchstart', function(event) {
-            touchStartTime = new Date().getTime();  // 记录触摸开始时间
-            event.preventDefault();  // 阻止默认行为，防止触发双击放大等行为
+            event.preventDefault();  // 阻止默认行为，如双击放大
         });
         
         $element.on('touchend', function(event) {
-            var touchEndTime = new Date().getTime();
-            if (touchEndTime - touchStartTime < 1) {  // 判断触摸持续时间，短于300毫秒认为是点击
+            var currentTime = new Date().getTime();
+            if (currentTime - lastClickTime > 5000) {  // 5秒内无法再次点击
                 handleInteraction(event, $(this), data, isPerson);
+                lastClickTime = currentTime;  // 更新最后一次点击时间
             }
         });
         
