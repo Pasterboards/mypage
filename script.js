@@ -28,12 +28,27 @@ $(document).ready(function() {
         var $element = $('<div>', {
             text: data.name,
             class: 'floatingText',
-        }).appendTo('body').on('click touchend', function(event) {  // Changed touchstart to touchend
-            if (!isElementActive || $(this).data('isName') === false) {
-                toggleWord($(this), data, isPerson);
-            } else if ($(this).data('isName')) {
-                // Avoiding preventDefault to not block navigation
-                window.open(data.website, '_blank');
+        }).appendTo('body');
+
+        var touchStartTime;
+        var touchThreshold = 300; // 设定触摸时间阈值为300毫秒
+
+        $element.on('mousedown touchstart', function(event) {
+            touchStartTime = new Date().getTime(); // 记录触摸开始时间
+        }).on('mouseup touchend', function(event) {
+            var touchEndTime = new Date().getTime(); // 记录触摸结束时间
+            var touchDuration = touchEndTime - touchStartTime; // 计算触摸持续时间
+
+            if (touchDuration < touchThreshold) {
+                // 短按事件处理
+                if (!isElementActive || $(this).data('isName') === false) {
+                    toggleWord($(this), data, isPerson);
+                } else if ($(this).data('isName')) {
+                    window.open(data.website, '_blank');
+                }
+            } else {
+                // 长按事件处理
+                // 这里可以添加针对长按的操作，例如打开一个菜单等
             }
         });
 
