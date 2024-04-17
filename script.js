@@ -29,12 +29,11 @@ $(document).ready(function() {
             text: data.name,
             class: 'floatingText',
         }).appendTo('body').on('click touchstart', function(event) {
-            console.log("Element clicked!"); // 添加日志以确保事件被触发
             event.preventDefault();
             if (!isElementActive || $(this).data('isName') === false) {
                 toggleWord($(this), data, isPerson);
             } else if ($(this).data('isName') === true) {
-                console.log("Attempting to open URL: " + $(this).data('website')); // 日志记录尝试打开的网址
+                // 当元素处于显示名称状态时，点击打开新窗口至指定网站
                 window.open($(this).data('website'), '_blank');
             }
         });
@@ -71,6 +70,7 @@ $(document).ready(function() {
     
         elements.push($element);
     }
+    
     
 
     function toggleWord($ele, data, isPerson) {
