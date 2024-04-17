@@ -24,54 +24,56 @@ $(document).ready(function() {
         if (elements.length >= maxElements) {
             return;
         }
-
+    
         var $element = $('<div>', {
             text: data.name,
             class: 'floatingText',
-        }).appendTo('body').on('click touchend', function(event) {  // Changed touchstart to touchend
+        }).appendTo('body').on('click touchstart', function(event) {
+            event.preventDefault();
             if (!isElementActive || $(this).data('isName') === false) {
                 toggleWord($(this), data, isPerson);
-            } else if ($(this).data('isName')) {
-                // Avoiding preventDefault to not block navigation
-                window.open(data.website, '_blank');
+            } else if ($(this).data('isName') === true) {
+                // 当元素处于显示名称状态时，点击打开新窗口至指定网站
+                window.open($(this).data('website'), '_blank');
             }
         });
-
+    
         var elementWidth = $element.outerWidth();
         var elementHeight = $element.outerHeight();
-
+    
         var pos = {
             x: ($(window).width() - elementWidth) / 2,
             y: ($(window).height() - elementHeight) / 2
         };
-
+    
         $element.css({
             left: pos.x + 'px',
             top: pos.y + 'px',
         });
-
+    
         $element.data(isPerson ? {
             isName: true,
             startYear: data.startYear,
             endYear: data.endYear,
-            website: data.website  // Ensure website link is included
+            website: data.website // 确保网站链接被加入到元素的数据中
         } : {
             isName: true,
             year: data.year,
-            website: data.website  // Ensure website link is included
+            website: data.website // 同上
         });
-
+    
         var speedModifier = $(window).width() > $(window).height() ? { x: 1.5, y: 1 } : { x: 1, y: 1.5 };
         velocities.push({
             x: (Math.random() - 0.5) * normalSpeed * speedModifier.x,
             y: (Math.random() - 0.5) * normalSpeed * speedModifier.y
         });
-
+    
         elements.push($element);
     }
+    
 
     function toggleWord($ele, data, isPerson) {
-        var randomYear;
+        var randomYear, otherData;
         $ele.css('opacity', '1');
         var isName = $ele.data('isName');
 
@@ -86,7 +88,8 @@ $(document).ready(function() {
 
         elements.forEach(function($otherEle, index) {
             if ($otherEle.data('isName')) {
-                adjustOpacityAndSpeed($otherEle, $otherEle.data(), randomYear, index);
+                otherData = $otherEle.data();
+                adjustOpacityAndSpeed($otherEle, otherData, randomYear, index);
             }
         });
 
@@ -124,7 +127,7 @@ $(document).ready(function() {
 
     $('body').addClass('noYearActive');
 
-    $(document).on('click touchend', function(event) {  // Changed touchstart to touchend globally
+    $(document).on('click touchstart', function(event) {
         if (!$(event.target).closest('.floatingText').length) {
             isAnimating = true;
         }
