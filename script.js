@@ -28,24 +28,15 @@ $(document).ready(function() {
         var $element = $('<div>', {
             text: data.name,
             class: 'floatingText',
-        }).appendTo('body');
-    
-        // 使用一个函数来处理点击或触摸事件
-        function handleInteraction(event) {
+        }).appendTo('body').on('click touchstart', function(event) {
             event.preventDefault();
-            if (!isElementActive || $element.data('isName') === false) {
-                toggleWord($element, data, isPerson);
-            } else if ($element.data('isName') === true) {
-                window.open($element.data('website'), '_blank');
+            if (!isElementActive || $(this).data('isName') === false) {
+                toggleWord($(this), data, isPerson);
+            } else if ($(this).data('isName') === true) {
+                // 当元素处于显示名称状态时，点击打开新窗口至指定网站
+                window.open($(this).data('website'), '_blank');
             }
-        }
-    
-        // 检测是否是触摸设备
-        if ('ontouchstart' in window) {
-            $element.on('touchstart', handleInteraction);
-        } else {
-            $element.on('click', handleInteraction);
-        }
+        });
     
         var elementWidth = $element.outerWidth();
         var elementHeight = $element.outerHeight();
@@ -64,11 +55,11 @@ $(document).ready(function() {
             isName: true,
             startYear: data.startYear,
             endYear: data.endYear,
-            website: data.website
+            website: data.website // 确保网站链接被加入到元素的数据中
         } : {
             isName: true,
             year: data.year,
-            website: data.website
+            website: data.website // 同上
         });
     
         var speedModifier = $(window).width() > $(window).height() ? { x: 1.5, y: 1 } : { x: 1, y: 1.5 };
@@ -79,6 +70,7 @@ $(document).ready(function() {
     
         elements.push($element);
     }
+    
     
 
     function toggleWord($ele, data, isPerson) {
