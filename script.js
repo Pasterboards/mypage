@@ -28,17 +28,24 @@ $(document).ready(function() {
         var $element = $('<div>', {
             text: data.name,
             class: 'floatingText',
-        }).appendTo('body').on('click touchend', function(event) {  // 修改 touchstart 为 touchend，更适合触发链接跳转
+        }).appendTo('body');
+    
+        // 使用一个函数来处理点击或触摸事件
+        function handleInteraction(event) {
             event.preventDefault();
-            if (!isElementActive || $(this).data('isName') === false) {
-                toggleWord($(this), data, isPerson);
-            } else if ($(this).data('isName') === true) {
-                // 使用 setTimeout 修复移动设备上可能遇到的阻止新窗口打开的问题
-                setTimeout(() => {
-                    window.open($(this).data('website'), '_blank');
-                }, 0);
+            if (!isElementActive || $element.data('isName') === false) {
+                toggleWord($element, data, isPerson);
+            } else if ($element.data('isName') === true) {
+                window.open($element.data('website'), '_blank');
             }
-        });
+        }
+    
+        // 检测是否是触摸设备
+        if ('ontouchstart' in window) {
+            $element.on('touchstart', handleInteraction);
+        } else {
+            $element.on('click', handleInteraction);
+        }
     
         var elementWidth = $element.outerWidth();
         var elementHeight = $element.outerHeight();
@@ -57,11 +64,11 @@ $(document).ready(function() {
             isName: true,
             startYear: data.startYear,
             endYear: data.endYear,
-            website: data.website // 确保网站链接被加入到元素的数据中
+            website: data.website
         } : {
             isName: true,
             year: data.year,
-            website: data.website // 同上
+            website: data.website
         });
     
         var speedModifier = $(window).width() > $(window).height() ? { x: 1.5, y: 1 } : { x: 1, y: 1.5 };
@@ -72,6 +79,7 @@ $(document).ready(function() {
     
         elements.push($element);
     }
+    
     
 
     function toggleWord($ele, data, isPerson) {
