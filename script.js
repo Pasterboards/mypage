@@ -40,7 +40,7 @@ $(document).ready(function() {
         
         $element.on('touchend', function(event) {
             var touchEndTime = new Date().getTime();
-            if (touchEndTime - touchStartTime < 300) {  // 判断触摸持续时间，短于300毫秒认为是点击
+            if (touchEndTime - touchStartTime < 1) {  // 判断触摸持续时间，短于300毫秒认为是点击
                 handleInteraction(event, $(this), data, isPerson);
             }
         });
