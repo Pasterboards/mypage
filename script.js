@@ -28,29 +28,16 @@ $(document).ready(function() {
         var $element = $('<div>', {
             text: data.name,
             class: 'floatingText',
-        }).appendTo('body');
-    
-        // 使用一个函数来处理点击或触摸事件
-        function handleInteraction(event) {
+        }).appendTo('body').on('click touchstart', function(event) {
             event.preventDefault();
-            if (!isElementActive || $element.data('isName') === false) {
-                toggleWord($element, data, isPerson);
-            } else if ($element.data('isName') === true) {
-                // 检查是否是移动设备，如果是，则导航至外部链接，否则打开新窗口
-                if ('ontouchstart' in window) {
-                    window.location.href = $element.data('website');
-                } else {
-                    window.open($element.data('website'), '_blank');
-                }
+            // 移动和非移动设备使用相同的点击逻辑
+            if (!isElementActive || $(this).data('isName') === false) {
+                toggleWord($(this), data, isPerson);
+            } else if ($(this).data('isName') === true) {
+                // 点击时打开新窗口至指定网站
+                window.open($(this).data('website'), '_blank');
             }
-        }
-    
-        // 检测是否是触摸设备
-        if ('ontouchstart' in window) {
-            $element.on('touchstart', handleInteraction);
-        } else {
-            $element.on('click', handleInteraction);
-        }
+        });
     
         var elementWidth = $element.outerWidth();
         var elementHeight = $element.outerHeight();
@@ -84,6 +71,7 @@ $(document).ready(function() {
     
         elements.push($element);
     }
+    
     
     
 
