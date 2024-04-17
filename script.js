@@ -20,6 +20,30 @@ $(document).ready(function() {
     var peopleCount = 0;
     var eventCount = 0;
 
+    $(document).ready(function() {
+        // 添加的变量用于记录触摸开始时间和设置触摸时长的阈值
+        var touchStartTime = 0;  // 存储触摸开始的时间
+        var minimumTouchDuration = 500;  // 设置触摸时长的阈值，单位为毫秒
+    
+        // 添加的触摸开始事件处理器
+        $('body').on('touchstart', '.floatingText', function(event) {
+            touchStartTime = Date.now();  // 记录触摸开始的时间
+        });
+    
+        // 修改的触摸结束事件处理器，加入了时间判断
+        $('body').on('touchend', '.floatingText', function(event) {
+            var touchEndTime = Date.now();  // 记录触摸结束的时间
+            var touchDuration = touchEndTime - touchStartTime;  // 计算触摸持续的时间
+            if (touchDuration > minimumTouchDuration) {  // 如果触摸时间超过阈值，则执行原有的点击逻辑
+                if (!isElementActive || $(this).data('isName') === false) {
+                    toggleWord($(this), data, isPerson);
+                } else if ($(this).data('isName')) {
+                    window.open(data.website, '_blank');
+                }
+            }
+        });
+    });
+    
     function createFloatingElement(data, isPerson) {
         if (elements.length >= maxElements) {
             return;
