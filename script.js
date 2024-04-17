@@ -29,14 +29,25 @@ $(document).ready(function() {
         var $element = $('<div>', {
             text: data.name,
             class: 'floatingText',
-        }).appendTo('body').on('click touchend', function(event) {  // Changed touchstart to touchend
-            if (!isElementActive || $(this).data('isName') === false) {
-                toggleWord($(this), data, isPerson);
-            } else if ($(this).data('isName')) {
-                // Avoiding preventDefault to not block navigation
+        }).appendTo('body')
+            .on('click', function(event) {
+                // Handle click for non-mobile devices and potentially mobile devices
+                handleInteraction(event, $(this), data, isPerson);
+            })
+            .on('touchend', function(event) {
+                // Prevent default to avoid double tap zoom in mobile browsers
+                event.preventDefault();
+                // Handle touch for mobile devices
+                handleInteraction(event, $(this), data, isPerson);
+            });
+        
+        function handleInteraction(event, element, data, isPerson) {
+            if (!isElementActive || element.data('isName') === false) {
+                toggleWord(element, data, isPerson);
+            } else if (element.data('isName')) {
                 window.open(data.website, '_blank');
             }
-        });
+        }
 
         var elementWidth = $element.outerWidth();
         var elementHeight = $element.outerHeight();
