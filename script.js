@@ -29,12 +29,11 @@ $(document).ready(function() {
             text: data.name,
             class: 'floatingText',
         }).appendTo('body').on('click touchstart', function(event) {
-            event.preventDefault(); // 防止移动设备上的默认触摸事件行为（例如滚动或缩放）
-    
+            event.preventDefault();
             if (!isElementActive || $(this).data('isName') === false) {
                 toggleWord($(this), data, isPerson);
             } else if ($(this).data('isName') === true) {
-                // 当元素处于显示名称状态时，点击或触摸打开新窗口至指定网站
+                // 当元素处于显示名称状态时，点击打开新窗口至指定网站
                 window.open($(this).data('website'), '_blank');
             }
         });
