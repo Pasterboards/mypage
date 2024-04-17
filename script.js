@@ -2,8 +2,6 @@ $(document).ready(function() {
     console.log(peopleData);
     console.log(eventData);
 
-    var lastTouchTime = 0;  // 用于存储上次触摸时间
-
     var elements = [];
     var velocities = [];
     var isAnimating = true;
@@ -19,6 +17,9 @@ $(document).ready(function() {
 
     var maxElements = isMobileBrowser ? 35 : Infinity;
 
+    var peopleCount = 0;
+    var eventCount = 0;
+
     function createFloatingElement(data, isPerson) {
         if (elements.length >= maxElements) {
             return;
@@ -27,20 +28,11 @@ $(document).ready(function() {
         var $element = $('<div>', {
             text: data.name,
             class: 'floatingText',
-        }).appendTo('body').on('touchend click', function(event) {
-            var currentTime = new Date().getTime();
-            if (event.type === 'click' && currentTime - lastTouchTime < 500) {
-                // 如果两个事件间隔小于500毫秒，忽略click事件
-                return;
-            }
-            if (event.type === 'touchend') {
-                lastTouchTime = currentTime;  // 更新最后触摸时间
-            }
-
-            event.preventDefault();
+        }).appendTo('body').on('click touchend', function(event) {  // Changed touchstart to touchend
             if (!isElementActive || $(this).data('isName') === false) {
                 toggleWord($(this), data, isPerson);
             } else if ($(this).data('isName')) {
+                // Avoiding preventDefault to not block navigation
                 window.open(data.website, '_blank');
             }
         });
@@ -62,11 +54,11 @@ $(document).ready(function() {
             isName: true,
             startYear: data.startYear,
             endYear: data.endYear,
-            website: data.website
+            website: data.website  // Ensure website link is included
         } : {
             isName: true,
             year: data.year,
-            website: data.website
+            website: data.website  // Ensure website link is included
         });
 
         var speedModifier = $(window).width() > $(window).height() ? { x: 1.5, y: 1 } : { x: 1, y: 1.5 };
@@ -132,7 +124,7 @@ $(document).ready(function() {
 
     $('body').addClass('noYearActive');
 
-    $(document).on('touchend click', function(event) {  // 确保全局事件也处理同样逻辑
+    $(document).on('click touchend', function(event) {  // Changed touchstart to touchend globally
         if (!$(event.target).closest('.floatingText').length) {
             isAnimating = true;
         }
