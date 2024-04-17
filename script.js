@@ -47,8 +47,8 @@ $(document).ready(function() {
             }
         });
     }
-    
 
+    
     function toggleWord($ele, data, isPerson) {
         var randomYear;
         $ele.css('opacity', '1');
