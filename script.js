@@ -21,24 +21,16 @@ $(document).ready(function() {
     var eventCount = 0;
 
     $(document).ready(function() {
-        // 存储触摸开始时间和设置触摸时长的阈值
-        var touchStartTime = 0;
-        var minimumTouchDuration = 10;  // 触摸时长的阈值，单位为毫秒
+        // 用于存储是否为移动浏览器的标志
+        var isMobileBrowser = $(window).width() < 768;
     
-        // 处理触摸开始事件
-        $('body').on('touchstart', '.floatingText', function(event) {
-            touchStartTime = Date.now();  // 记录触摸开始时间
-        });
-    
-        // 处理触摸结束事件，同时适用于数字和文本的切换
-        $('body').on('touchend', '.floatingText', function(event) {
-            var touchEndTime = Date.now();
-            var touchDuration = touchEndTime - touchStartTime;
-            if (touchDuration > minimumTouchDuration) {  // 检查触摸时长是否超过阈值
-                var isName = $(this).data('isName');
-                if (!isElementActive || !isName) {
+        // 为".floatingText"元素绑定点击和触摸结束事件，两者执行同一逻辑
+        $('body').on('click touchend', '.floatingText', function(event) {
+            event.preventDefault();  // 防止默认行为，特别是在移动设备上
+            if (event.type === 'click' || isMobileBrowser) {  // 在移动设备上，忽略触摸时长，直接触发
+                if (!isElementActive || $(this).data('isName') === false) {
                     toggleWord($(this), $(this).data(), $(this).data('isPerson'));
-                } else if (isName) {
+                } else if ($(this).data('isName')) {
                     window.open($(this).data('website'), '_blank');
                 }
             }
