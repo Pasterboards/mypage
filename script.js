@@ -39,7 +39,7 @@ $(document).ready(function() {
         
         $element.on('touchend', function(event) {
             var currentTime = new Date().getTime();
-            if (currentTime - lastClickTime > 100) {  // 5秒内无法再次点击
+            if (currentTime - lastClickTime > 50) {  // 秒内无法再次点击
                 handleInteraction(event, $(this), data, isPerson);
                 lastClickTime = currentTime;  // 更新最后一次点击时间
             }
