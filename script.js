@@ -23,7 +23,7 @@ $(document).ready(function() {
     $(document).ready(function() {
         // 存储触摸开始时间和设置触摸时长的阈值
         var touchStartTime = 0;
-        var minimumTouchDuration = 500;  // 触摸时长的阈值，单位为毫秒
+        var minimumTouchDuration = 10;  // 触摸时长的阈值，单位为毫秒
     
         // 处理触摸开始事件
         $('body').on('touchstart', '.floatingText', function(event) {
