@@ -26,15 +26,17 @@ $(document).ready(function() {
         var minimumTouchDuration = 500;  // 触摸时长的阈值，单位为毫秒
     
         // 处理触摸开始事件
-        $('body').on('touchstart', '.floatingText', function(event) {
+        $('body').on('touchstart click', '.floatingText', function(event) {
             touchStartTime = Date.now();  // 记录触摸开始时间
         });
     
-        // 处理触摸结束事件，同时适用于数字和文本的切换
-        $('body').on('touchend', '.floatingText', function(event) {
+        // 处理触摸结束和点击事件，同时适用于数字和文本的切换
+        $('body').on('touchend click', '.floatingText', function(event) {
             var touchEndTime = Date.now();
             var touchDuration = touchEndTime - touchStartTime;
-            if (touchDuration > minimumTouchDuration) {  // 检查触摸时长是否超过阈值
+    
+            // 当事件为 click 或触摸时间超过阈值时，执行相应逻辑
+            if (event.type === 'click' || touchDuration > minimumTouchDuration) {
                 var isName = $(this).data('isName');
                 if (!isElementActive || !isName) {
                     toggleWord($(this), $(this).data(), $(this).data('isPerson'));
@@ -46,6 +48,7 @@ $(document).ready(function() {
     });
     
     // toggleWord 函数和其它部分保持不变
+    
     
     
     
