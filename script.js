@@ -9,7 +9,7 @@ $(document).ready(function() {
     var normalSpeed = 0.4;
     var slowedSpeed = 0.1;
 
-    var isMobileBrowser = $(window).width() < 768;
+    var isMobileBrowser = $(window).width() < 1080;
     if (isMobileBrowser) {
         normalSpeed *= 2;
         slowedSpeed *= 2;
