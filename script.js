@@ -29,12 +29,12 @@ $(document).ready(function() {
             text: data.name,
             class: 'floatingText',
         }).appendTo('body').on('click touchstart', function(event) {
-            event.preventDefault();
-            // 移动和非移动设备使用相同的点击逻辑
+            event.preventDefault(); // 防止移动设备上的默认触摸事件行为（例如滚动或缩放）
+    
             if (!isElementActive || $(this).data('isName') === false) {
                 toggleWord($(this), data, isPerson);
             } else if ($(this).data('isName') === true) {
-                // 点击时打开新窗口至指定网站
+                // 当元素处于显示名称状态时，点击或触摸打开新窗口至指定网站
                 window.open($(this).data('website'), '_blank');
             }
         });
@@ -56,11 +56,11 @@ $(document).ready(function() {
             isName: true,
             startYear: data.startYear,
             endYear: data.endYear,
-            website: data.website
+            website: data.website // 确保网站链接被加入到元素的数据中
         } : {
             isName: true,
             year: data.year,
-            website: data.website
+            website: data.website // 同上
         });
     
         var speedModifier = $(window).width() > $(window).height() ? { x: 1.5, y: 1 } : { x: 1, y: 1.5 };
@@ -71,6 +71,7 @@ $(document).ready(function() {
     
         elements.push($element);
     }
+    
     
     
     
