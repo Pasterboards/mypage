@@ -29,7 +29,11 @@ $(document).ready(function() {
             text: data.name,
             class: 'floatingText',
         }).appendTo('body').on('click touchstart', function(event) {
-            event.preventDefault();
+            event.preventDefault();  // 阻止默认行为，如链接跳转或表单提交
+            if (event.type === 'touchstart') {
+                event.stopPropagation();  // 阻止事件冒泡，避免在移动设备上同时触发 click 事件
+            }
+    
             if (!isElementActive || $(this).data('isName') === false) {
                 toggleWord($(this), data, isPerson);
             } else if ($(this).data('isName') === true) {
