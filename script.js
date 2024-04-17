@@ -32,21 +32,17 @@ $(document).ready(function() {
     
         // 使用一个函数来处理点击或触摸事件
         function handleInteraction(event) {
+            event.preventDefault();
             if (!isElementActive || $element.data('isName') === false) {
-                event.preventDefault(); // 阻止默认行为只在必要时进行
                 toggleWord($element, data, isPerson);
             } else if ($element.data('isName') === true) {
-                // 这里不使用preventDefault，以允许浏览器处理新窗口的打开
                 window.open($element.data('website'), '_blank');
             }
         }
     
         // 检测是否是触摸设备
         if ('ontouchstart' in window) {
-            $element.on('touchstart', function(event) {
-                handleInteraction(event); // 直接调用处理函数
-                event.stopPropagation(); // 阻止事件继续传播到其他元素
-            });
+            $element.on('touchstart', handleInteraction);
         } else {
             $element.on('click', handleInteraction);
         }
@@ -83,8 +79,6 @@ $(document).ready(function() {
     
         elements.push($element);
     }
-    
-    
     
 
     function toggleWord($ele, data, isPerson) {
