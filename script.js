@@ -29,17 +29,26 @@ $(document).ready(function() {
         var $element = $('<div>', {
             text: data.name,
             class: 'floatingText',
-        }).appendTo('body')
-            .on('click', function(event) {
-                // Handle click for non-mobile devices and potentially mobile devices
+        }).appendTo('body');
+        
+        var touchStartTime = 0;  // 初始化触摸开始时间
+        
+        $element.on('touchstart', function(event) {
+            touchStartTime = new Date().getTime();  // 记录触摸开始时间
+            event.preventDefault();  // 阻止默认行为，防止触发双击放大等行为
+        });
+        
+        $element.on('touchend', function(event) {
+            var touchEndTime = new Date().getTime();
+            if (touchEndTime - touchStartTime < 300) {  // 判断触摸持续时间，短于300毫秒认为是点击
                 handleInteraction(event, $(this), data, isPerson);
-            })
-            .on('touchend', function(event) {
-                // Prevent default to avoid double tap zoom in mobile browsers
-                event.preventDefault();
-                // Handle touch for mobile devices
-                handleInteraction(event, $(this), data, isPerson);
-            });
+            }
+        });
+        
+        $element.on('click', function(event) {
+            // 对于非触摸设备，保留click事件处理
+            handleInteraction(event, $(this), data, isPerson);
+        });
         
         function handleInteraction(event, element, data, isPerson) {
             if (!isElementActive || element.data('isName') === false) {
@@ -48,6 +57,7 @@ $(document).ready(function() {
                 window.open(data.website, '_blank');
             }
         }
+        
 
         var elementWidth = $element.outerWidth();
         var elementHeight = $element.outerHeight();
