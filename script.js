@@ -28,17 +28,15 @@ $(document).ready(function() {
         var $element = $('<div>', {
             text: data.name,
             class: 'floatingText',
-        }).appendTo('body').on('click touchstart', function(event) {
-            event.preventDefault();  // 阻止默认行为，如链接跳转或表单提交
-            if (event.type === 'touchstart') {
-                event.stopPropagation();  // 阻止事件冒泡，避免在移动设备上同时触发 click 事件
-            }
-    
+        }).appendTo('body').on('click touchend', function(event) {  // 修改 touchstart 为 touchend，更适合触发链接跳转
+            event.preventDefault();
             if (!isElementActive || $(this).data('isName') === false) {
                 toggleWord($(this), data, isPerson);
             } else if ($(this).data('isName') === true) {
-                // 当元素处于显示名称状态时，点击打开新窗口至指定网站
-                window.open($(this).data('website'), '_blank');
+                // 使用 setTimeout 修复移动设备上可能遇到的阻止新窗口打开的问题
+                setTimeout(() => {
+                    window.open($(this).data('website'), '_blank');
+                }, 0);
             }
         });
     
