@@ -24,7 +24,7 @@ $(document).ready(function() {
         if (elements.length >= maxElements) {
             return;
         }
-    
+
         var $element = $('<div>', {
             text: data.name,
             class: 'floatingText',
@@ -32,48 +32,33 @@ $(document).ready(function() {
             event.preventDefault();
             if (!isElementActive || $(this).data('isName') === false) {
                 toggleWord($(this), data, isPerson);
-            } else if ($(this).data('isName') === true) {
-                // 当元素处于显示名称状态时，点击打开新窗口至指定网站
-                window.open($(this).data('website'), '_blank');
             }
         });
-    
+
         var elementWidth = $element.outerWidth();
         var elementHeight = $element.outerHeight();
-    
+
         var pos = {
             x: ($(window).width() - elementWidth) / 2,
             y: ($(window).height() - elementHeight) / 2
         };
-    
+
         $element.css({
             left: pos.x + 'px',
             top: pos.y + 'px',
         });
-    
-        $element.data(isPerson ? {
-            isName: true,
-            startYear: data.startYear,
-            endYear: data.endYear,
-            website: data.website // 确保网站链接被加入到元素的数据中
-        } : {
-            isName: true,
-            year: data.year,
-            website: data.website // 同上
-        });
-    
+
+        $element.data(isPerson ? { isName: true, startYear: data.startYear, endYear: data.endYear } :
+                                 { isName: true, year: data.year });
+
         var speedModifier = $(window).width() > $(window).height() ? { x: 1.5, y: 1 } : { x: 1, y: 1.5 };
         velocities.push({
             x: (Math.random() - 0.5) * normalSpeed * speedModifier.x,
             y: (Math.random() - 0.5) * normalSpeed * speedModifier.y
         });
-    
+
         elements.push($element);
     }
-    
-    
-    
-    
 
     function toggleWord($ele, data, isPerson) {
         var randomYear, otherData;
