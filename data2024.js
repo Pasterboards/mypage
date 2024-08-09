@@ -24,6 +24,6 @@ var eventData = [
     { name: "Concept Designing", year: 2018, website: 'https://partner-web.jp/article/?id=1705'},
     { name: "Damien Rice", year: 2017, website: 'https://youtu.be/pk6JoI65Zs0?si=nvBIK0aLPJuX-TJ2'},
     { name: "Hamacho Zouenkeikaku", year: 2024, website: 'https://taikafasciation.bandcamp.com/album/hamacho-zouenkeikaku'},
-    { name: "", year: 2024, website: 'https://www.tokyoartbeat.com/events/-/Nomadism-Vol-1/meee-gallery-tokyo/2024-08-02'},
+    { name: "NOMADISM Vol.1", year: 2024, website: 'https://www.tokyoartbeat.com/events/-/Nomadism-Vol-1/meee-gallery-tokyo/2024-08-02'},
 ];
 
