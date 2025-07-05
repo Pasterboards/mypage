@@ -11,7 +11,7 @@ var peopleData = [
     { name: "Discogs", startYear: 2018, endYear: 2025, website: 'https://www.discogs.com/ja/user/Pasteboard_/collection'},
     { name: "Instagram", startYear: 2015, endYear: 2025, website: 'https://www.instagram.com/pasterboard__/'},
     { name: "Polaroid Her", startYear: 2020, endYear: 2021, website: 'https://www.tumblr.com/blog_auth/postceremony'},
-    { name: "Tianshuo Lu", startYear: 2020, endYear: 2021, website: 'https://pasterboards.github.io/mypage/'},
+    { name: "Tianshuo Lu", startYear: 1994, endYear: 2025, website: 'https://pasterboards.github.io/mypage/'},
     { name: "Mail", startYear: 1994, endYear: 2025, website: 'mailto:lutianshuo@hotmail.com'},
     { name: "RCSC", startYear: 2025, endYear: 2025, website: 'https://rcsc.musabi.ac.jp/'},  
 　  { name: "Portfolio", startYear: 1994, endYear: 2025, website: 'https://drive.google.com/file/d/16f18FgmI0uj2lVmOfVdf-aqQu-bPZbwu/view?usp=sharing'},  
