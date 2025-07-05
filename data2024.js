@@ -19,8 +19,8 @@ var peopleData = [
 
 var eventData = [
     { name: "Born", year: 1994, website: 'https://en.wikipedia.org/wiki/1994' },
-    { name: "Theory in Suspension", year: 1994, website: ' https://www.musabi.ac.jp/topics/20250421_03_03/' },
-    { name: "Graduate Show 2024", year: 1994, website: 'https://ciclgs24.musabi.ac.jp/exhibitors/184a6dea-5dcd-8135-8541-f65e3c786178' },
+    { name: "Theory in Suspension", year: 2025, website: ' https://www.musabi.ac.jp/topics/20250421_03_03/' },
+    { name: "Graduate Show 2024", year: 2025, website: 'https://ciclgs24.musabi.ac.jp/exhibitors/184a6dea-5dcd-8135-8541-f65e3c786178' },
     { name: "We Stand So Many Ghosts of Unknown Chances", year: 2024, website: 'https://gallery-alpham.com/exhibition/project_2023-2024/vol5/' },
     { name: "Pasteboard's Vinyl Club", year: 2023 , website: 'https://geisai.jp/tenji_search/map/outside/T075'},
     { name: "Fabrication and Optical Measurement of Hexagonal Nanodisk Arrays", year: 2019, website: 'https://www.jstage.jst.go.jp/article/jsapmeeting/2019.1/0/2019.1_1053/_article/-char/en'},
