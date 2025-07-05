@@ -117,4 +117,119 @@ $(document).ready(function () {
         if ((data.startYear <= randomYear && data.endYear >= randomYear) || (data.year === randomYear)) {
             $ele.css('opacity', '1');
             velocities[index] = { x: (Math.random() - 0.5) * slowedSpeed, y: (Math.random() - 0.5) * slowedSpeed };
+        } else {
+            $ele.css('opacity', '0.3');
+            velocities[index] = { x: (Math.random() - 0.5) * normalSpeed, y: (Math.random() - 0.5) * normalSpeed };
+        }
+    }
 
+    function handleInteraction(event, element, data, isPerson) {
+        if (!isElementActive || element.data('isName') === false) {
+            toggleWord(element, data, isPerson);
+        } else if (element.data('isName')) {
+            window.open(data.website, '_blank');
+        }
+    }
+
+    peopleData.forEach(function (data) {
+        if (isMobileBrowser && peopleCount < maxElements / 2) {
+            createFloatingElement(data, true);
+            peopleCount++;
+        } else if (!isMobileBrowser) {
+            createFloatingElement(data, true);
+        }
+    });
+
+    eventData.forEach(function (data) {
+        if (isMobileBrowser && eventCount < maxElements / 2) {
+            createFloatingElement(data, false);
+            eventCount++;
+        } else if (!isMobileBrowser) {
+            createFloatingElement(data, false);
+        }
+    });
+
+    $('body').addClass('noYearActive');
+
+    $(document).on('click touchend', function (event) {
+        if (!$(event.target).closest('.floatingText').length) {
+            isAnimating = true;
+        }
+    });
+
+    function animateElements() {
+        if (isAnimating) {
+            elements.forEach(function ($ele, index) {
+                var name = $ele.text();
+                var velocity = velocities[index];
+
+                if (specialNames.includes(name)) {
+                    if ($ele.data('isFixed')) return;
+
+                    if ($ele.data('shouldMoveToTarget')) {
+                        var target = $ele.data('targetPos');
+                        var currentX = parseFloat($ele.css('left'));
+                        var currentY = parseFloat($ele.css('top'));
+                        var dx = target.x - currentX;
+                        var dy = target.y - currentY;
+
+                        var stepX = dx * 0.05;
+                        var stepY = dy * 0.05;
+
+                        $ele.css({
+                            left: currentX + stepX + 'px',
+                            top: currentY + stepY + 'px'
+                        });
+
+                        if (Math.abs(dx) < 1 && Math.abs(dy) < 1) {
+                            $ele.css({
+                                left: target.x + 'px',
+                                top: target.y + 'px'
+                            });
+                            $ele.data('isFixed', true);
+                            velocities[index] = { x: 0, y: 0 };
+                        }
+                    } else {
+                        var newPos = calculateNewPosition($ele, velocity);
+                        $ele.css({ left: newPos.x, top: newPos.y });
+                    }
+                } else {
+                    var newPos = calculateNewPosition($ele, velocity);
+                    $ele.css({ left: newPos.x, top: newPos.y });
+
+                    if ($ele.data('isName') === false) {
+                        velocities[index] = {
+                            x: (Math.random() - 0.5) * slowedSpeed,
+                            y: (Math.random() - 0.5) * slowedSpeed
+                        };
+                    }
+                }
+            });
+        }
+        requestAnimationFrame(animateElements);
+    }
+
+    function calculateNewPosition($ele, velocity) {
+        var newPos = {
+            x: parseFloat($ele.css('left')) + velocity.x,
+            y: parseFloat($ele.css('top')) + velocity.y
+        };
+        var eleWidth = $ele.outerWidth();
+        var eleHeight = $ele.outerHeight();
+        var windowWidth = $(window).width();
+        var windowHeight = $(window).height();
+
+        if (newPos.x < 0 || newPos.x + eleWidth > windowWidth) {
+            velocity.x = -velocity.x;
+            newPos.x = Math.max(0, Math.min(newPos.x, windowWidth - eleWidth));
+        }
+        if (newPos.y < 0 || newPos.y + eleHeight > windowHeight) {
+            velocity.y = -velocity.y;
+            newPos.y = Math.max(0, Math.min(newPos.y, windowHeight - eleHeight));
+        }
+
+        return newPos;
+    }
+
+    requestAnimationFrame(animateElements);
+});
