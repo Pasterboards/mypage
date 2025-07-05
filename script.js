@@ -20,14 +20,6 @@ $(document).ready(function () {
     var peopleCount = 0;
     var eventCount = 0;
 
-    // 固定要素とその目標位置
-    const pinnedNames = ["CV", "Tianshuo Lu", "Instagram"];
-    const pinnedTargets = {
-        "CV": { x: 20, y: 20 },
-        "Tianshuo Lu": { x: 20, y: 60 },
-        "Instagram": { x: 20, y: 100 }
-    };
-
     function createFloatingElement(data, isPerson) {
         if (elements.length >= maxElements) {
             return;
@@ -37,6 +29,10 @@ $(document).ready(function () {
             text: data.name,
             class: 'floatingText',
         }).appendTo('body');
+
+        if (['CV', 'Tianshuo Lu', 'Instagram'].includes(data.name)) {
+            $element.attr('data-fix-to-corner', 'true');
+        }
 
         var lastClickTime = 0;
 
@@ -88,21 +84,21 @@ $(document).ready(function () {
             website: data.website
         });
 
-        // 特殊固定要素フラグ
-        const isPinned = pinnedNames.includes(data.name);
-        $element.data("isPinned", isPinned);
-        $element.data("isFixed", false);
+        let velocity;
+        if ($element.attr('data-fix-to-corner')) {
+            velocity = {
+                x: -Math.abs(Math.random() * slowedSpeed),
+                y: -Math.abs(Math.random() * slowedSpeed)
+            };
+        } else {
+            const speedModifier = $(window).width() > $(window).height() ? { x: 1.5, y: 1 } : { x: 1, y: 1.5 };
+            velocity = {
+                x: (Math.random() - 0.5) * normalSpeed * speedModifier.x,
+                y: (Math.random() - 0.5) * normalSpeed * speedModifier.y
+            };
+        }
 
-        var speedModifier = $(window).width() > $(window).height() ? { x: 1.5, y: 1 } : { x: 1, y: 1.5 };
-
-        var vx = isPinned
-            ? -(Math.random() * normalSpeed)
-            : (Math.random() - 0.5) * normalSpeed * speedModifier.x;
-        var vy = isPinned
-            ? -(Math.random() * normalSpeed)
-            : (Math.random() - 0.5) * normalSpeed * speedModifier.y;
-
-        velocities.push({ x: vx, y: vy });
+        velocities.push(velocity);
         elements.push($element);
     }
 
@@ -167,42 +163,29 @@ $(document).ready(function () {
     });
 
     function animateElements() {
-        elements.forEach(function ($ele, index) {
-            const velocity = velocities[index];
+        if (isAnimating) {
+            elements.forEach(function ($ele, index) {
+                var velocity = velocities[index];
+                var newPos = calculateNewPosition($ele, velocity);
 
-            if ($ele.data("isPinned") && !$ele.data("isFixed")) {
-                const target = pinnedTargets[$ele.text()] || pinnedTargets[$ele.data("name")];
-                const elePos = {
-                    x: parseFloat($ele.css("left")),
-                    y: parseFloat($ele.css("top"))
-                };
-
-                const dx = target.x - elePos.x;
-                const dy = target.y - elePos.y;
-
-                velocity.x += dx * 0.02;
-                velocity.y += dy * 0.02;
-
-                if (Math.hypot(dx, dy) < 2) {
-                    $ele.css({ left: target.x, top: target.y });
-                    velocities[index] = { x: 0, y: 0 };
-                    $ele.data("isFixed", true);
-                    return;
+                if ($ele.attr('data-fix-to-corner')) {
+                    if (newPos.x <= 10 && newPos.y <= 10) {
+                        newPos.x = 10;
+                        newPos.y = 10;
+                        velocities[index] = { x: 0, y: 0 };
+                    }
                 }
-            }
 
-            if (isAnimating && !$ele.data("isFixed")) {
-                const newPos = calculateNewPosition($ele, velocity);
                 $ele.css({ left: newPos.x, top: newPos.y });
 
-                if ($ele.data("isName") === false) {
+                if ($ele.data('isName') === false && !$ele.attr('data-fix-to-corner')) {
                     velocities[index] = {
                         x: (Math.random() - 0.5) * slowedSpeed,
                         y: (Math.random() - 0.5) * slowedSpeed
                     };
                 }
-            }
-        });
+            });
+        }
 
         requestAnimationFrame(animateElements);
     }
