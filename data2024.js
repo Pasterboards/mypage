@@ -12,13 +12,13 @@ var peopleData = [
     { name: "Instagram", startYear: 2015, endYear: 2025, website: 'https://www.instagram.com/pasterboard__/'},
     { name: "Polaroid Her", startYear: 2020, endYear: 2021, website: 'https://www.tumblr.com/blog_auth/postceremony'},
     { name: "Tianshuo Lu", startYear: 2020, endYear: 2021, website: 'https://pasterboards.github.io/mypage/'},
-    { name: "Mail", startYear: 2012, endYear: 2025, website: 'mailto:lutianshuo@hotmail.com'},
+    { name: "Mail", startYear: 1994, endYear: 2025, website: 'mailto:lutianshuo@hotmail.com'},
     { name: "RCSC", startYear: 2025, endYear: 2025, website: 'https://rcsc.musabi.ac.jp/'},  
+　  { name: "Portfolio", startYear: 1994, endYear: 2025, website: 'https://drive.google.com/file/d/16f18FgmI0uj2lVmOfVdf-aqQu-bPZbwu/view?usp=sharing'},  
 ];
 
 var eventData = [
     { name: "Born", year: 1994, website: 'https://en.wikipedia.org/wiki/1994' },
-    { name: "Portfolio", year: 2025, website: 'https://drive.google.com/file/d/16f18FgmI0uj2lVmOfVdf-aqQu-bPZbwu/view?usp=sharing'},
     { name: "Theory in Suspension", year: 1994, website: ' https://www.musabi.ac.jp/topics/20250421_03_03/' },
     { name: "Graduate Show 2024", year: 1994, website: 'https://ciclgs24.musabi.ac.jp/exhibitors/184a6dea-5dcd-8135-8541-f65e3c786178' },
     { name: "We Stand So Many Ghosts of Unknown Chances", year: 2024, website: 'https://gallery-alpham.com/exhibition/project_2023-2024/vol5/' },
