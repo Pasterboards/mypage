@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     console.log(peopleData);
     console.log(eventData);
 
@@ -20,6 +20,7 @@ $(document).ready(function () {
     var peopleCount = 0;
     var eventCount = 0;
 
+    
     function createFloatingElement(data, isPerson) {
         if (elements.length >= maxElements) {
             return;
@@ -29,29 +30,26 @@ $(document).ready(function () {
             text: data.name,
             class: 'floatingText',
         }).appendTo('body');
-
-        if (['CV', 'Tianshuo Lu', 'Instagram'].includes(data.name)) {
-            $element.attr('data-fix-to-corner', 'true');
-        }
-
-        var lastClickTime = 0;
-
-        $element.on('touchstart', function (event) {
-            event.preventDefault();
+        
+        var lastClickTime = 0;  // 初始化最后一次点击时间
+        
+        $element.on('touchstart', function(event) {
+            event.preventDefault();  // 阻止默认行为，如双击放大
         });
-
-        $element.on('touchend', function (event) {
+        
+        $element.on('touchend', function(event) {
             var currentTime = new Date().getTime();
-            if (currentTime - lastClickTime > 50) {
+            if (currentTime - lastClickTime > 50) {  // 秒内无法再次点击
                 handleInteraction(event, $(this), data, isPerson);
-                lastClickTime = currentTime;
+                lastClickTime = currentTime;  // 更新最后一次点击时间
             }
         });
-
-        $element.on('click', function (event) {
+        
+        $element.on('click', function(event) {
+            // 对于非触摸设备，保留click事件处理
             handleInteraction(event, $(this), data, isPerson);
         });
-
+        
         function handleInteraction(event, element, data, isPerson) {
             if (!isElementActive || element.data('isName') === false) {
                 toggleWord(element, data, isPerson);
@@ -59,6 +57,7 @@ $(document).ready(function () {
                 window.open(data.website, '_blank');
             }
         }
+        
 
         var elementWidth = $element.outerWidth();
         var elementHeight = $element.outerHeight();
@@ -77,28 +76,19 @@ $(document).ready(function () {
             isName: true,
             startYear: data.startYear,
             endYear: data.endYear,
-            website: data.website
+            website: data.website  // Ensure website link is included
         } : {
             isName: true,
             year: data.year,
-            website: data.website
+            website: data.website  // Ensure website link is included
         });
 
-        let velocity;
-        if ($element.attr('data-fix-to-corner')) {
-            velocity = {
-                x: -Math.abs(Math.random() * slowedSpeed),
-                y: -Math.abs(Math.random() * slowedSpeed)
-            };
-        } else {
-            const speedModifier = $(window).width() > $(window).height() ? { x: 1.5, y: 1 } : { x: 1, y: 1.5 };
-            velocity = {
-                x: (Math.random() - 0.5) * normalSpeed * speedModifier.x,
-                y: (Math.random() - 0.5) * normalSpeed * speedModifier.y
-            };
-        }
+        var speedModifier = $(window).width() > $(window).height() ? { x: 1.5, y: 1 } : { x: 1, y: 1.5 };
+        velocities.push({
+            x: (Math.random() - 0.5) * normalSpeed * speedModifier.x,
+            y: (Math.random() - 0.5) * normalSpeed * speedModifier.y
+        });
 
-        velocities.push(velocity);
         elements.push($element);
     }
 
@@ -116,7 +106,7 @@ $(document).ready(function () {
             isElementActive = false;
         }
 
-        elements.forEach(function ($otherEle, index) {
+        elements.forEach(function($otherEle, index) {
             if ($otherEle.data('isName')) {
                 adjustOpacityAndSpeed($otherEle, $otherEle.data(), randomYear, index);
             }
@@ -136,7 +126,7 @@ $(document).ready(function () {
         }
     }
 
-    peopleData.forEach(function (data) {
+    peopleData.forEach(function(data) {
         if (isMobileBrowser && peopleCount < maxElements / 2) {
             createFloatingElement(data, true);
             peopleCount++;
@@ -145,7 +135,7 @@ $(document).ready(function () {
         }
     });
 
-    eventData.forEach(function (data) {
+    eventData.forEach(function(data) {
         if (isMobileBrowser && eventCount < maxElements / 2) {
             createFloatingElement(data, false);
             eventCount++;
@@ -156,7 +146,7 @@ $(document).ready(function () {
 
     $('body').addClass('noYearActive');
 
-    $(document).on('click touchend', function (event) {
+    $(document).on('click touchend', function(event) {  // Changed touchstart to touchend globally
         if (!$(event.target).closest('.floatingText').length) {
             isAnimating = true;
         }
@@ -164,21 +154,12 @@ $(document).ready(function () {
 
     function animateElements() {
         if (isAnimating) {
-            elements.forEach(function ($ele, index) {
+            elements.forEach(function($ele, index) {
                 var velocity = velocities[index];
                 var newPos = calculateNewPosition($ele, velocity);
-
-                if ($ele.attr('data-fix-to-corner')) {
-                    if (newPos.x <= 10 && newPos.y <= 10) {
-                        newPos.x = 10;
-                        newPos.y = 10;
-                        velocities[index] = { x: 0, y: 0 };
-                    }
-                }
-
                 $ele.css({ left: newPos.x, top: newPos.y });
 
-                if ($ele.data('isName') === false && !$ele.attr('data-fix-to-corner')) {
+                if ($ele.data('isName') === false) {
                     velocities[index] = {
                         x: (Math.random() - 0.5) * slowedSpeed,
                         y: (Math.random() - 0.5) * slowedSpeed
@@ -186,7 +167,6 @@ $(document).ready(function () {
                 }
             });
         }
-
         requestAnimationFrame(animateElements);
     }
 
