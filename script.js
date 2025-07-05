@@ -44,18 +44,15 @@ $(document).ready(function () {
             handleInteraction(event, $(this), data, isPerson);
         });
 
-        setTimeout(function () {
-            var elementWidth = $element.outerWidth();
-            var elementHeight = $element.outerHeight();
-            var pos = {
-                x: ($(window).width() - elementWidth) / 2,
-                y: ($(window).height() - elementHeight) / 2
-            };
-            $element.css({
-                left: pos.x + 'px',
-                top: pos.y + 'px'
-            });
-        }, 0);
+        // 初期位置：画面中央付近に固定値で配置（outerWidth等不要）
+        var pos = {
+            x: window.innerWidth / 2 - 50,
+            y: window.innerHeight / 2 - 10
+        };
+        $element.css({
+            left: pos.x + 'px',
+            top: pos.y + 'px'
+        });
 
         if (isPerson) {
             $element.data({
