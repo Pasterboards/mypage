@@ -15,7 +15,7 @@ var peopleData = [
     { name: "Mail", startYear: 1994, endYear: 2026, website: 'mailto:lutianshuo@hotmail.com'},
     { name: "RCSC", startYear: 2025, endYear: 2026, website: 'https://rcsc.musabi.ac.jp/'},  
 　  { name: "Portfolio", startYear: 1994, endYear: 2026, website: 'https://drive.google.com/file/d/16f18FgmI0uj2lVmOfVdf-aqQu-bPZbwu/view?usp=sharing'},  
-];
+    { name: "Scholar", startYear: 2019, endYear: 2026, website: 'https://scholar.google.com.hk/citations?view_op=list_works&hl=zh-CN&hl=zh-CN&user=8RK9ulQAAAAJ'}, 
 　  { name: "Material Experience Design", startYear: 2026, endYear: 2026, website: 'https://xlab.iii.u-tokyo.ac.jp/'},  
 ];
 var eventData = [
