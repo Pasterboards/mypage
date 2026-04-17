@@ -7,16 +7,17 @@ var peopleData = [
     { name: "Piping Engineer Job", startYear: 2020, endYear: 2022, website: 'https://www.sumitomo-chem.co.jp/news/detail/20220411.html' },
     { name: "Zuper Cold", startYear: 2020, endYear: 2021, website: 'https://mp.weixin.qq.com/s/35b80_k8PQZ_oRNgqU-4WA' },
     { name: "COVID-19", startYear: 2019, endYear: 2023, website: 'https://en.wikipedia.org/wiki/COVID-19' },
-    { name: "Baystars Fan", startYear: 2017, endYear: 2025, website: 'https://www.baystars.co.jp/'},
-    { name: "Discogs", startYear: 2018, endYear: 2025, website: 'https://www.discogs.com/ja/user/Pasteboard_/collection'},
-    { name: "Instagram", startYear: 2015, endYear: 2025, website: 'https://www.instagram.com/pasterboard__/'},
+    { name: "Baystars Fan", startYear: 2017, endYear: 2026, website: 'https://www.baystars.co.jp/'},
+    { name: "Discogs", startYear: 2018, endYear: 2026, website: 'https://www.discogs.com/ja/user/Pasteboard_/collection'},
+    { name: "Instagram", startYear: 2015, endYear: 2026, website: 'https://www.instagram.com/pasterboard__/'},
     { name: "Polaroid Her", startYear: 2020, endYear: 2021, website: 'https://www.tumblr.com/blog_auth/postceremony'},
-    { name: "Tianshuo Lu", startYear: 1994, endYear: 2025, website: 'https://pasterboards.github.io/mypage/'},
-    { name: "Mail", startYear: 1994, endYear: 2025, website: 'mailto:lutianshuo@hotmail.com'},
-    { name: "RCSC", startYear: 2025, endYear: 2025, website: 'https://rcsc.musabi.ac.jp/'},  
-　  { name: "Portfolio", startYear: 1994, endYear: 2025, website: 'https://drive.google.com/file/d/16f18FgmI0uj2lVmOfVdf-aqQu-bPZbwu/view?usp=sharing'},  
+    { name: "Tianshuo Lu", startYear: 1994, endYear: 2026, website: 'https://pasterboards.github.io/mypage/'},
+    { name: "Mail", startYear: 1994, endYear: 2026, website: 'mailto:lutianshuo@hotmail.com'},
+    { name: "RCSC", startYear: 2025, endYear: 2026, website: 'https://rcsc.musabi.ac.jp/'},  
+　  { name: "Portfolio", startYear: 1994, endYear: 2026, website: 'https://drive.google.com/file/d/16f18FgmI0uj2lVmOfVdf-aqQu-bPZbwu/view?usp=sharing'},  
 ];
-
+　  { name: "Material Experience Design", startYear: 2026, endYear: 2026, website: 'https://xlab.iii.u-tokyo.ac.jp/'},  
+];
 var eventData = [
     { name: "Born", year: 1994, website: 'https://en.wikipedia.org/wiki/1994' },
     { name: "Theory in Suspension", year: 2025, website: ' https://www.musabi.ac.jp/topics/20250421_03_03/' },
@@ -29,5 +30,6 @@ var eventData = [
     { name: "Damien Rice", year: 2017, website: 'https://youtu.be/pk6JoI65Zs0?si=nvBIK0aLPJuX-TJ2'},
     { name: "Hamacho Zouenkeikaku", year: 2024, website: 'https://taikafasciation.bandcamp.com/album/hamacho-zouenkeikaku'},
     { name: "NOMADISM Vol.1", year: 2024, website: 'https://www.tokyoartbeat.com/events/-/Nomadism-Vol-1/meee-gallery-tokyo/2024-08-02'},
+    { name: "Theory in Suspension", year: 2025, website: 'https://www.tokyoartbeat.com/en/events/-/Theory-in-Suspension/B043-D6-F7/2025-04-23'},
 ];
 
